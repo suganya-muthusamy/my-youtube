@@ -11,9 +11,12 @@ const Header = () => {
     dispatch(toggleMenu());
   };
   return (
-    <div className="grid grid-flow-col gap-4 bg-gray-200 px-6">
+    <div className="grid grid-flow-col gap-4 bg-gray-200 px-4">
       <div className="col-span-1 flex items-center">
-        <span onClick={handleMenu} className="text-xl">
+        <span
+          onClick={handleMenu}
+          className="text-xl cursor-pointer p-2  hover:bg-gray-300 rounded-full transition-all ease-in-out delay-75"
+        >
           <TiThMenu />
         </span>
         <img
