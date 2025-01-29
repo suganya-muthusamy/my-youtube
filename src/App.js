@@ -5,6 +5,7 @@ function App() {
     <div className="">
       <Header />
       <Body />
+      <Header />
     </div>
   );
 }
