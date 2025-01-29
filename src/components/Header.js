@@ -1,13 +1,19 @@
-import React from "react";
+import React, { use } from "react";
 import { TiThMenu } from "react-icons/ti";
 import { FaUserCircle } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
-
+import { useDispatch } from "react-redux";
+import { toggleMenu } from "../redux/appSlice";
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const handleMenu = () => {
+    dispatch(toggleMenu());
+  };
   return (
     <div className="grid grid-flow-col gap-4 bg-gray-200 px-6">
       <div className="col-span-1 flex items-center">
-        <span className="text-xl">
+        <span onClick={handleMenu} className="text-xl">
           <TiThMenu />
         </span>
         <img
