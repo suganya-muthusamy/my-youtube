@@ -11,7 +11,7 @@ const Header = () => {
     dispatch(toggleMenu());
   };
   return (
-    <div className="grid grid-flow-col gap-4 bg-gray-200 px-4">
+    <div className="grid grid-flow-col gap-4 bg-gray-200 px-4 sticky top-0 z-20">
       <div className="col-span-1 flex items-center">
         <span
           onClick={handleMenu}
