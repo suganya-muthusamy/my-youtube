@@ -17,9 +17,9 @@ const ButtonList = () => {
     "Shows",
   ];
   return (
-    <div className="m-5 flex flex-wrap gap-2 sticky top-16">
+    <div className="m-5 flex flex-wrap gap-2 sticky top-14 pb-2 bg-white">
       {buttonList.map((list, i) => {
-        return <Button name={list} />;
+        return <Button key={i} name={list} />;
       })}
     </div>
   );

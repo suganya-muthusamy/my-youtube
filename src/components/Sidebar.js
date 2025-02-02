@@ -10,7 +10,7 @@ const Sidebar = () => {
     <div
       className="py-5 px-7 bg-gray-100 shadow-lg z-10 sticky top-12"
       style={{
-        width: "250px",
+        width: "240px",
         height: "100vh",
         overflowY: "scroll",
       }}
