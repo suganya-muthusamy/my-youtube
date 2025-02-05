@@ -1,28 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TiThMenu } from "react-icons/ti";
 import { FaUserCircle } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../redux/appSlice";
 import { YOUTUBE_SEARCH_SUGGESTIONS_API } from "../utilis/constant";
+import { IoCloseOutline } from "react-icons/io5";
+import { cacheResults } from "../redux/searchSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const searchCache = useSelector((store) => store.search.result);
+  // console.log("searchCache", searchCache);
   const [searchText, setSearchText] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [showResult, setShowResult] = useState(false);
 
   const handleMenu = () => {
     dispatch(toggleMenu());
   };
 
-  const handleSearch = async (e, searchText) => {
-    setSearchText(e.target.value);
-    const fetchSuggestions = await fetch(
-      YOUTUBE_SEARCH_SUGGESTIONS_API + searchText
-    );
+  useEffect(() => {
+    // Debouncing
+    // after 200ms, it will make an API call,
+    // after 200ms the new timer will be generated again
+    const timer = setTimeout(() => {
+      if (searchCache[searchText]) {
+        setSearchResult(searchCache[searchText]);
+      } else {
+        handleSearch();
+      }
+    }, 200);
 
-    const data = await fetchSuggestions.json();
-    setSearchResult(data);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchText]);
+
+  const handleSearch = async () => {
+    const data = await fetch(YOUTUBE_SEARCH_SUGGESTIONS_API + searchText);
+    const json = await data.json();
+    setSearchResult(json[1]);
+    setSearchText(searchText);
+    dispatch(
+      cacheResults({
+        [searchText]: json[1],
+      })
+    );
   };
 
   return (
@@ -42,10 +66,24 @@ const Header = () => {
       </div>
       <div className="col-span-10 flex flex-col justify-center">
         <div className="flex justify-center">
-          <div className="w-7/12 py-2 px-4 border border-gray-700 rounded-tl-full rounded-bl-full flex justify-between">
+          <div className="w-7/12 py-2 px-4 border border-gray-700 rounded-tl-full rounded-bl-full flex justify-between items-center">
+            {showResult && (
+              <span className="px-2 text-xl">
+                <CiSearch />
+              </span>
+            )}
             <form className="w-full">
               <input
-                onChange={(e) => handleSearch(e, searchText)}
+                onFocus={() => {
+                  setShowResult(true);
+                }}
+                onBlur={() => {
+                  setShowResult(false);
+                }}
+                onChange={(e) => {
+                  setSearchText(e.target.value);
+                  setShowResult(true);
+                }}
                 value={searchText}
                 className="w-full focus:outline-none"
                 type="text"
@@ -57,22 +95,27 @@ const Header = () => {
                 onClick={() => {
                   setSearchText("");
                 }}
-                className="cursor-pointer"
+                className="cursor-pointer text-xl"
               >
-                close
+                <IoCloseOutline />
               </span>
             )}
           </div>
-          {searchText && searchResult.length > 0 && (
+          {searchText && showResult && searchResult.length > 0 && (
             <div className="bg-gray-100 w-5/12 absolute top-16 rounded-lg">
               <ul className="w-full p-5">
                 {searchText &&
-                  searchResult[1] &&
-                  searchResult[1].map((result, i) => {
+                  searchResult &&
+                  searchResult.map((result, i) => {
                     return (
-                      <li key={i} className="my-2">
-                        {result}
-                      </li>
+                      <div className="flex items-center">
+                        <span className="cursor-pointer text-xl">
+                          <CiSearch />
+                        </span>
+                        <li key={i} className="m-2 cursor-pointer ">
+                          {result}
+                        </li>
+                      </div>
                     );
                   })}
               </ul>

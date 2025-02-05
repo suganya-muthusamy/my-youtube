@@ -12,7 +12,7 @@ const useYoutubeVideos = () => {
       const response = await fetch(YOUTUBE_API_URL);
       const data = await response.json();
       setFetchVideo(data);
-      console.log(data, "data");
+      // console.log(data, "data");
     } catch (error) {
       console.error("Error fetching YouTube videos:", error);
     }

@@ -9,7 +9,7 @@ const VideoPlayer = () => {
   // console.log(searchparams.get("v"));
 
   const playVideo = useSelector((store) => store?.video?.singleVideo);
-  console.log(playVideo, "result");
+  // console.log(playVideo, "result");
 
   const { snippet, statistics } = playVideo;
   const { channelTitle, title, thumbnails } = snippet;
