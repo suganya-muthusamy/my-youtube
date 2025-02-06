@@ -7,6 +7,7 @@ import { toggleMenu } from "../redux/appSlice";
 import { YOUTUBE_SEARCH_SUGGESTIONS_API } from "../utilis/constant";
 import { IoCloseOutline } from "react-icons/io5";
 import { cacheResults } from "../redux/searchSlice";
+import { setVideos } from "../redux/videoSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Header = () => {
   const [searchText, setSearchText] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [showResult, setShowResult] = useState(false);
+  const [resultVideos, setResultVideos] = useState(false);
 
   const handleMenu = () => {
     dispatch(toggleMenu());
@@ -47,6 +49,20 @@ const Header = () => {
         [searchText]: json[1],
       })
     );
+    setResultVideos(true);
+  };
+
+  // useEffect(() => {
+  //   handleSearchResults();
+  // }, []);
+  const handleSearchResults = async (result) => {
+    setSearchText(result);
+    const data = await fetch(
+      `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+    );
+    const json = await data.json();
+    dispatch(setVideos(json?.items));
+    console.log("see", json);
   };
 
   return (
@@ -108,11 +124,20 @@ const Header = () => {
                   searchResult &&
                   searchResult.map((result, i) => {
                     return (
-                      <div className="flex items-center">
+                      <div key={i} className="flex items-center">
                         <span className="cursor-pointer text-xl">
                           <CiSearch />
                         </span>
-                        <li key={i} className="m-2 cursor-pointer ">
+                        <li
+                          onMouseDown={(e) => {
+                            e.preventDefault(); // Prevents input from losing focus before click registers
+                            setSearchText(result);
+                            handleSearchResults(result);
+                            setShowResult(false);
+                          }}
+                          key={i}
+                          className="m-2 cursor-pointer "
+                        >
                           {result}
                         </li>
                       </div>

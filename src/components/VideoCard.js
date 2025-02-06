@@ -29,7 +29,7 @@ const VideoCard = ({ data }) => {
         </h1>
         <h1 className="text-gray-500 text-sm font-medium">{channelTitle}</h1>
         <h1 className="text-gray-500 text-sm font-medium">
-          {formatViews(statistics.viewCount)} Views
+          {/* {formatViews(statistics.viewCount)} Views */}
         </h1>
       </ul>
     </div>
