@@ -19,11 +19,11 @@ const VideoContainer = () => {
       {fetchVideo?.map((item, i) => {
         return (
           <Link
-            key={item.id}
+            key={item?.id}
             onClick={() => {
               dispatch(playVideo(item));
             }}
-            to={`/watch?v=${item.id}`}
+            to={`/watch?v=${item?.id?.videoId ? item?.id?.videoId : item?.id}`}
           >
             <VideoCard data={item} />
           </Link>

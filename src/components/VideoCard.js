@@ -14,11 +14,11 @@ const VideoCard = ({ data }) => {
   };
 
   return (
-    <div className="w-72 rounded-lg shadow">
+    <div className="rounded-lg shadow w-72">
       <img
         alt="thumbnails"
         src={thumbnails.medium.url}
-        className="rounded-lg"
+        className="rounded-lg w-full"
       />
       <ul className="p-2">
         <h1
@@ -29,7 +29,7 @@ const VideoCard = ({ data }) => {
         </h1>
         <h1 className="text-gray-500 text-sm font-medium">{channelTitle}</h1>
         <h1 className="text-gray-500 text-sm font-medium">
-          {/* {formatViews(statistics.viewCount)} Views */}
+          {formatViews(statistics?.viewCount)} Views
         </h1>
       </ul>
     </div>

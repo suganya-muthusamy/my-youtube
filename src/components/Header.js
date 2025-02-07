@@ -58,7 +58,8 @@ const Header = () => {
   const handleSearchResults = async (result) => {
     setSearchText(result);
     const data = await fetch(
-      `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+      // `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&chart=mostPopular&q=${result}&maxResults=50&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
     );
     const json = await data.json();
     dispatch(setVideos(json?.items));
@@ -66,7 +67,7 @@ const Header = () => {
   };
 
   return (
-    <div className="grid grid-flow-col gap-4 bg-white px-4 sticky top-0 z-20 ">
+    <div className="grid grid-flow-col gap-4 bg-white px-4 sticky top-0 z-20 shadow-md">
       <div className="col-span-1 flex items-center">
         <span
           onClick={handleMenu}
@@ -135,7 +136,6 @@ const Header = () => {
                             handleSearchResults(result);
                             setShowResult(false);
                           }}
-                          key={i}
                           className="m-2 cursor-pointer "
                         >
                           {result}

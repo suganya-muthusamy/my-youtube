@@ -3,8 +3,8 @@ import VideoPlayer from "./VideoPlayer";
 
 const WatchPage = () => {
   return (
-    <div className="my-10 absolute">
-      <div className="flex justify-between">
+    <div className="my-14 absolute">
+      <div className="flex">
         <VideoPlayer />
         <Suggestions />
       </div>

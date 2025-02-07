@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { closeMenu } from "../redux/appSlice";
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import CommentsConatiner from "./CommentsConatiner";
 
 const VideoPlayer = () => {
   const [searchparams] = useSearchParams();
@@ -20,7 +21,7 @@ const VideoPlayer = () => {
   }, []);
 
   return (
-    <div className="mx-20">
+    <div className="ml-10 mr-5">
       <iframe
         width={850}
         height={450}
@@ -38,6 +39,7 @@ const VideoPlayer = () => {
         <h1 className="font-bold text-lg">{title}</h1>
         <h1>{channelTitle}</h1>
       </div>
+      <CommentsConatiner />
     </div>
   );
 };
