@@ -8,6 +8,7 @@ import { YOUTUBE_SEARCH_SUGGESTIONS_API } from "../utilis/constant";
 import { IoCloseOutline } from "react-icons/io5";
 import { cacheResults } from "../redux/searchSlice";
 import { setVideos } from "../redux/videoSlice";
+import { FaSearch } from "react-icons/fa";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const Header = () => {
   };
 
   return (
-    <div className="grid grid-flow-col gap-4 bg-white px-4 sticky top-0 z-20 shadow-md">
+    <div className="grid grid-flow-col gap-4 bg-white px-4 p-2 sticky top-0 z-20 ">
       <div className="col-span-1 flex items-center">
         <span
           onClick={handleMenu}
@@ -75,11 +76,18 @@ const Header = () => {
         >
           <TiThMenu />
         </span>
-        <img
+
+        <h1 className=" text-red-600  font-bold flex items-center mx-2">
+          <span className="text-3xl mx-1">TUBE</span>
+          <span className="text-gray-800 mt-4">
+            <FaSearch />
+          </span>{" "}
+        </h1>
+        {/* <img
           className="h-14 mx-4"
           alt="logo"
           src="https://logos-world.net/wp-content/uploads/2020/04/YouTube-Logo.png"
-        />
+        /> */}
       </div>
       <div className="col-span-10 flex flex-col justify-center">
         <div className="flex justify-center">
