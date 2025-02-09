@@ -16,7 +16,7 @@ const useYoutubeVideos = () => {
       const data = await response.json();
       setFetchVideo(data);
       dispatch(setVideos(data?.items));
-      console.log(data, "data");
+      console.log("data", data.items[0]);
     } catch (error) {
       console.error("Error fetching YouTube videos:", error);
     }

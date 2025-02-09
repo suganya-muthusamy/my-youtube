@@ -9,9 +9,12 @@ import { IoCloseOutline } from "react-icons/io5";
 import { cacheResults } from "../redux/searchSlice";
 import { setVideos } from "../redux/videoSlice";
 import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const searchCache = useSelector((store) => store.search.result);
   // console.log("searchCache", searchCache);
   const [searchText, setSearchText] = useState("");
@@ -64,7 +67,9 @@ const Header = () => {
     );
     const json = await data.json();
     dispatch(setVideos(json?.items));
-    console.log("see", json);
+
+    console.log("reviews.", json.items[0]);
+    navigate("/");
   };
 
   return (

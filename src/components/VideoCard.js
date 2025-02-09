@@ -28,9 +28,11 @@ const VideoCard = ({ data }) => {
           {title.length > 60 ? title.substring(0, 57) + "..." : title}
         </h1>
         <h1 className="text-gray-500 text-sm font-medium">{channelTitle}</h1>
-        <h1 className="text-gray-500 text-sm font-medium">
-          {formatViews(statistics?.viewCount)} Views
-        </h1>
+        {statistics && (
+          <h1 className="text-gray-500 text-sm font-medium">
+            {formatViews(statistics?.viewCount)} Views
+          </h1>
+        )}
       </ul>
     </div>
   );

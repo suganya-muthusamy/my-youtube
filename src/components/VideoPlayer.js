@@ -1,13 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { closeMenu } from "../redux/appSlice";
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CommentsConatiner from "./CommentsConatiner";
+import { FaUserCircle } from "react-icons/fa";
 
 const VideoPlayer = () => {
   const [searchparams] = useSearchParams();
+  // console.log("searchparams", searchparams);
+
   // console.log(searchparams.get("v"));
+
+  const [comments, setComments] = useState([]);
 
   const playVideo = useSelector((store) => store?.video?.singleVideo);
   // console.log(playVideo, "result");
@@ -15,15 +20,10 @@ const VideoPlayer = () => {
   const { snippet, statistics } = playVideo;
   const { channelTitle, title, thumbnails } = snippet;
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(closeMenu());
-  }, []);
-
   return (
-    <div className="ml-10 mr-5">
+    <div className="w-8/12">
       <iframe
-        width={850}
+        width={950}
         height={450}
         className="rounded-2xl"
         src={`https://www.youtube.com/embed/${searchparams.get(
@@ -37,9 +37,16 @@ const VideoPlayer = () => {
       ></iframe>
       <div className="my-2">
         <h1 className="font-bold text-lg">{title}</h1>
-        <h1>{channelTitle}</h1>
+        <div className="flex">
+          <span className="text-3xl">
+            <FaUserCircle />
+          </span>
+          <h1>{channelTitle}</h1>
+          <button className="rounded-full px-4 py-2 bg-gray-500 text-bold">
+            Subscribe
+          </button>
+        </div>
       </div>
-      <CommentsConatiner />
     </div>
   );
 };

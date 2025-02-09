@@ -9,13 +9,18 @@ const VideoContainer = () => {
   const videos = useYoutubeVideos();
 
   const fetchVideo = useSelector((store) => store?.video?.videos);
-  console.log(fetchVideo, "fetchVideo");
+  // console.log(fetchVideo, "fetchVideo");
 
   const dispatch = useDispatch();
 
   return (
     <div className="flex flex-wrap gap-5 mx-5 my-5">
-      {fetchVideo?.length > 0 && <AdVideoCard data={fetchVideo[0]} />}
+      {fetchVideo?.length > 0 && (
+        <Link to={`/watch?v=${fetchVideo[0].id}`}>
+          <AdVideoCard data={fetchVideo[0]} />
+        </Link>
+      )}
+
       {fetchVideo?.map((item, i) => {
         return (
           <Link
