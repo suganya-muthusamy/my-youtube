@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TiThMenu } from "react-icons/ti";
 import { FaUserCircle } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
@@ -22,6 +22,8 @@ const Header = () => {
   const [showResult, setShowResult] = useState(false);
   const [resultVideos, setResultVideos] = useState(false);
 
+  const searchTextRef = useRef("");
+
   const handleMenu = () => {
     dispatch(toggleMenu());
   };
@@ -31,12 +33,14 @@ const Header = () => {
     // after 200ms, it will make an API call,
     // after 200ms the new timer will be generated again
     const timer = setTimeout(() => {
+      if (searchText.trim() === "") return;
+
       if (searchCache[searchText]) {
         setSearchResult(searchCache[searchText]);
       } else {
         handleSearch();
       }
-    }, 200);
+    }, 300);
 
     return () => {
       clearTimeout(timer);
@@ -111,6 +115,7 @@ const Header = () => {
                   setShowResult(false);
                 }}
                 onChange={(e) => {
+                  searchTextRef.current = e.target.value;
                   setSearchText(e.target.value);
                   setShowResult(true);
                 }}
@@ -131,12 +136,12 @@ const Header = () => {
               </span>
             )}
           </div>
-          {searchText && showResult && searchResult.length > 0 && (
+          {searchText && showResult && searchResult?.length > 0 && (
             <div className="bg-gray-100 w-5/12 absolute top-16 rounded-lg">
               <ul className="w-full p-5">
                 {searchText &&
                   searchResult &&
-                  searchResult.map((result, i) => {
+                  searchResult?.map((result, i) => {
                     return (
                       <div key={i} className="flex items-center">
                         <span className="cursor-pointer text-xl">
